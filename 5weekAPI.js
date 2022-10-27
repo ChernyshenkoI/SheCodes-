@@ -1,15 +1,20 @@
 
-let apiKey = "5f472b7acba333cd8a035ea85a0d4d4c";
-let units = "metric";
-let city = "Sydney";
-let apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=${units}`;
+function showTemperature(responce){
+    let temperature= Math.round(responce.data.main.temp)
+    let heading = document.querySelector("h1")
+    heading.innerHTML= `Current temperature is ${temperature}C`
+    }
 
-axios.get(apiUrl).then(showTemperature);
+    function retrievePosition(position)
+    {
+    let lat = (position.coords.latitude);
+    let lon =(position.coords.longitude);
+    let units = "metric"
+    let apiKey = "5f472b7acba333cd8a035ea85a0d4d4c";
+    let apiUrl =`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${apiKey}&units=${units}`
 
+    axios.get(apiUrl).then(showTemperature)
 
-function showTemperature(response) {
-    let temperature = Math.round(response.data.main.temp);
-    let temperatureElement = document.querySelector("h1");
-    temperatureElement.innerHTML = `It is ${temperature}°C in ${city}`;
-  }
-  
+    }
+    
+    navigator.geolocation.getCurrentPosition(retrievePosition)
